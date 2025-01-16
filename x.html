@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <link rel="stylesheet" href="form.css">
+    <script>
+        // JavaScript code for client-side validation and success message
+        function validateForm(event) {
+            // Prevent form submission to handle validation first
+            event.preventDefault();
+
+            // Get form elements
+            const name = document.getElementById('name');
+            const regNumber = document.getElementById('regNumber');
+            const contact = document.getElementById('contact');
+            const email = document.getElementById('email');
+            const eventSelect = document.getElementById('event');
+            
+            // Validate full name
+            if (name.value.trim() === "") {
+                alert("Please enter your full name.");
+                return false;
+            }
+
+            // Validate registration number
+            if (regNumber.value.trim() === "") {
+                alert("Please enter your registration number.");
+                return false;
+            }
+
+            // Validate contact number (check if it is a valid number)
+            const contactPattern = /^[0-9]{10}$/;
+            if (!contact.value.match(contactPattern)) {
+                alert("Please enter a valid 10-digit contact number.");
+                return false;
+            }
+
+            // Validate email
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!email.value.match(emailPattern)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            // Validate event selection
+            if (eventSelect.value === "Event") {
+                alert("Please select an event.");
+                return false;
+            }
+
+            // If all validations pass, show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Optionally, you can reset the form after showing the success message
+             document.getElementById('registrationForm').reset();
+
+             console.log(req.body);
+        }
+    </script>
+</head>
+<body>
+
+<h2>Register for Event</h2>
+
+<form id="registrationForm" action="register_event.php" method="POST" onsubmit="validateForm(event)">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" placeholder="Enter your full name." required>
+
+    <label for="regNumber">Registration Number:</label>
+    <input type="text" id="regNumber" name="regNumber" placeholder="Enter your registration number." required>
+
+    <label for="contact">Contact Number:</label>
+    <input type="text" id="contact" name="contact" placeholder="Enter your mobile number." required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="Enter your Email ID" required>
+
+    <label for="event">Select Event:</label>
+    <select id="event" name="event" required>
+        <option value="Event"> Choose Event</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Hackathon">Hackathon</option>
+        <option value="Seminar">Seminar</option>
+        <option value="Tech Talk">Tech Talk</option>
+    </select>
+
+    <label for="message">Additional Message:</label>
+    <textarea id="message" name="message" rows="4"></textarea>
+
+    <input type="submit" value="Register">
+</form>
+
+<!-- Success message after successful form submission -->
+<div id="successMessage" style="display:none; color: rgb(0, 0, 0); font-size: 18px; text-align: center ;font-weight: bold; padding: 10px;">
+    Registration is successfully completed.
+</div>
+
+</body>
+</html>
